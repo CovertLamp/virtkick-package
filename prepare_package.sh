@@ -29,6 +29,7 @@ nvm use 0.11
 cd "$BASE_DIR/output/src"
 npm install
 
+mkdir -p "$BASE_DIR/output/bin"
 cd "$BASE_DIR/output/bin"
 if ! [ -e aria2c ];then
     echo "Downloading aria2c from https://github.com/coreb1te/aria2-builds-for-linux"
