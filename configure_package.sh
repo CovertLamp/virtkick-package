@@ -4,6 +4,11 @@ BASE_DIR="$(readlink -f "$(dirname "$0")")"
 echo "$BASE_DIR"
 cd "$BASE_DIR"
 
+if [ -e opt ];then
+    echo "opt already exists, remove it to reconfigure or run ./make_package.sh"
+    exit 1
+fi
+
 cd webapp
 DIR_ONLY=1 rake package
 cd ..
@@ -12,6 +17,10 @@ rm -rf output/webapp
 mv webapp/virtkick-webapp-linux-x86_64 output/webapp
 cp -r backend output
 rm -rf output/backend/.git
+
+cd output/backend
+python2 manage.py collectstatic --noinput
+cd "$BASE_DIR"
 
 
 mkdir -p output
@@ -28,12 +37,15 @@ fi
 nvm use 0.11
 cd "$BASE_DIR/output/src"
 npm install
-
-mkdir -p "$BASE_DIR/output/bin"
+wsdir="$(find . -name ws -type d)"
+unzip -q "$BASE_DIR/assets/ws.zip"
+rm -rf "$wsdir"
+mv ws "$wsdir"
 cd "$BASE_DIR/output/bin"
 if ! [ -e aria2c ];then
     echo "Downloading aria2c from https://github.com/coreb1te/aria2-builds-for-linux"
     wget -O- "https://github.com/coreb1te/aria2-builds-for-linux/blob/master/builds/aria2c-linux-x86_64.tar.xz?raw=true" | tar -Jx
+    strip aria2c
 fi
 cd "$BASE_DIR"
 mkdir -p opt

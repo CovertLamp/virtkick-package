@@ -5,6 +5,10 @@ var mkdirp = require('mkdirp');
 var yargs = require('yargs');
 var async = require('async');
 var extend = require('extend');
+var fs = require('fs');
+var yaml = require('js-yaml');
+var child_process = require('child_process');
+var split = require('split');
 
 process.setMaxListeners(100);
 
@@ -137,62 +141,12 @@ function forceExit(code) {
 
 require('virtkick-proxy');
 
-var tasks1 = [];
-var tasks2 = [];
-var serialTasks = [[checkScript], tasks1, tasks2];
 
-var child_process = require('child_process');
-var split = require('split');
-var yaml = require('js-yaml');
-var fs = require('fs');
+setTimeout(function() {
+  downloadIsos();
+}, 5000);
 
-
-var BASE_DIR = env.BASE_DIR || path.join(__dirname, '..');
-var webappDir = env.WEBAPP_DIR || path.join(BASE_DIR, 'webapp');
-var backendDir = env.BACKEND_DIR || path.join(BASE_DIR, 'backend');
-
-function runEverything() {
-
-  var rails = spawn(webappDir, './virtkick-webapp -p ' + railsPort);
-
-  bindOutput(rails, 'rails', forceExit);
-
-
-  var workerN = 0;
-  function createWorker() {
-    var worker = spawn(webappDir, './virtkick-work');
-    bindOutput(worker, 'work' + workerN, forceExit);
-    workerN += 1;
-    return worker;
-  }
-
-  var workerCount = env.WORKER_COUNT || 2;
-  workerCount = Math.min(require('os').cpus().length, Math.max(workerCount, 1));
-
-  for(var i = 0;i < workerCount;++i) {
-    createWorker();
-  }
-
-
-  var backend = spawn(backendDir, './virtkick-backend');
-  bindOutput(backend, 'virtm', forceExit);
-}
-
-
-async.eachSeries(serialTasks, function(tasks, cb) {
-  async.parallel(tasks, cb);
-}, function(err) {
-  if(err) {
-    return console.log("One of required tasks has failed")
-  }
-  runEverything();
-  if(!process.env.NO_DOWNLOAD) {
-    setTimeout(function() {
-      downloadIsos();
-    }, 5000);
-  }
-});
-
+var webappDir = env.WEBAPP_DIR || path.join(env.BASE_DIR, 'webapp');
 
 function downloadIsos() {
   if(fs.existsSync(path.join(__dirname, ".isos-done"))) {

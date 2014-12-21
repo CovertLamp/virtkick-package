@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 if [ "$(whoami)" == "root" ];then
-  sudo -u "virtkick-run" "$0" "$@"
+  exec sudo -u "virtkick-run" "$0" "$@"
 fi
 
 BASE_DIR="$(readlink -f "$(dirname "$0")")"
@@ -9,9 +9,6 @@ cd "$BASE_DIR"
 
 XDG_RUNTIME_DIR= setup/test_libvirt.py || (echo "libvirt or libvirt-python are not working, make sure libvirtd is running and proper python bindings are installed" && exit 1)
 
-. setup/system.sh
-export NVM_DIR="$BASE_DIR/src/.nvm"
-. "$NVM_DIR/nvm.sh"
-nvm use 0.11 > /dev/null
+. setup/run_env.sh
 exec node src/virtkick.js
 
