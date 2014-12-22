@@ -4,8 +4,8 @@ BASE_DIR="$(readlink -f "$(dirname "$0")")"
 echo "$BASE_DIR"
 cd "$BASE_DIR"
 
-if [ -e opt ];then
-    echo "opt already exists, remove it to reconfigure or run ./make_package.sh"
+if [ -e root_package ];then
+    echo "root_package already exists, remove it to reconfigure or run ./make_package.sh"
     exit 1
 fi
 
@@ -48,5 +48,6 @@ if ! [ -e aria2c ];then
     strip aria2c
 fi
 cd "$BASE_DIR"
-mkdir -p opt
-mv output opt/virtkick
+mkdir -p root_package/opt root_package/usr/lib/systemd/system
+mv output /root_package/opt/virtkick
+mv services/* root_package/usr/lib/systemd/system
