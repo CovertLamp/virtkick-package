@@ -20,7 +20,8 @@ function generate_rpm {
     -p "virtkick-VERSION-ITERATION${SUFFIX}_ARCH.rpm" \
     -m "Damian Kaczmarek <rush@virtkick.io>" \
     --after-install scripts/rpm/after_install.sh \
-    opt 
+    -C root_package \
+    opt usr
 }
 
 function generate_deb {
@@ -32,7 +33,8 @@ function generate_deb {
     -p "virtkick-VERSION-ITERATION${SUFFIX}_ARCH.deb" \
     -m "Damian Kaczmarek <rush@virtkick.io>" \
     --after-install scripts/rpm/after_install.sh \
-    opt 
+    -C root_package \
+    opt usr
 }
 
 generate_rpm "" -d 'bash' -d 'openssh' -d 'libvirt > 1.1' -d 'libvirt-python > 1.1' -d 'python > 2.7' -d 'libxml2-python > 2.7' -d 'qemu-kvm > 1.2'
