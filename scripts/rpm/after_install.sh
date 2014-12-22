@@ -14,7 +14,7 @@ systemctl enable sshd
 . setup/system.sh
 chown -R virtkick-run:root /opt/virtkick
 
-if which firewall-cmd > /dev/null; then
+if which firewall-cmd > /dev/null && firewall-cmd --state > /dev/null; then
   echo "Opening port 3000 on zone public"
   firewall-cmd --zone=public --add-port=3000/tcp --permanent
   firewall-cmd --reload
