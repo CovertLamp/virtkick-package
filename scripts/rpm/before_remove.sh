@@ -1,5 +1,5 @@
 #!/bin/bash
-if which firewall-cmd > /dev/null; then
+if which firewall-cmd > /dev/null && firewall-cmd --state > /dev/null; then
   echo "Closing port 3000 on zone public"
   firewall-cmd --zone=public --remove-port=3000/tcp --permanent
   firewall-cmd --reload
