@@ -25,7 +25,7 @@ for service in proxy webapp backend; do
   systemctl start virtkick-$service
 done
 
-for n in 1 2 3 4 5; do
+for n in 1 2; do
   systemctl enable virtkick-work@$n
   systemctl start virtkick-work@$n
 done
