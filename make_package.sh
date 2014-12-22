@@ -5,6 +5,8 @@ VERSION=`git describe --tags`
 if [ -z "$1" ]; then
   echo "Iteration set to 0. Use \`$0 123\` to set the iteration number."
   ITERATION='0'
+else
+  ITERATION="$1"
 fi
 
 
