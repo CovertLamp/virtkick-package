@@ -4,4 +4,4 @@ cd "$BASE_DIR"
 export SSH_PORT="$(cat .ssh-port 2> /dev/null || echo 22)"
 . setup/run_env.sh
 cd webapp
-exec ./virtkick-work
+exec ./virtkick-work "$@"
