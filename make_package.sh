@@ -1,10 +1,12 @@
-VERSION=0.3
-ITERATION=4
+VERSION=`git describe --tags`
 
-COMPRESSION=gz
-if [ "$1" != "" ];then
-    COMPRESSION="$1"
+[ -z "$COMPRESSION" ] && COMPRESSION='gz'
+
+if [ -z "$1" ]; then
+  echo "Iteration set to 0. Use \`$0 123\` to set the iteration number."
+  ITERATION='0'
 fi
+
 
 function generate_rpm {
     SUFFIX="$1"
