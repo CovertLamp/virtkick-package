@@ -20,6 +20,8 @@ function generate_rpm {
     -p "virtkick-VERSION-ITERATION${SUFFIX}_ARCH.rpm" \
     -m "Damian Kaczmarek <rush@virtkick.io>" \
     --after-install scripts/rpm/after_install.sh \
+    --after-upgrade scripts/rpm/after_upgrade.sh \
+    --before-remove scripts/rpm/before_remove.sh \
     -C root_package \
     opt usr
 }
@@ -33,6 +35,8 @@ function generate_deb {
     -p "virtkick-VERSION-ITERATION${SUFFIX}_ARCH.deb" \
     -m "Damian Kaczmarek <rush@virtkick.io>" \
     --after-install scripts/rpm/after_install.sh \
+    --after-upgrade scripts/rpm/after_upgrade.sh \
+    --before-remove scripts/rpm/before_remove.sh \
     -C root_package \
     opt usr
 }
