@@ -5,8 +5,8 @@ echo "$BASE_DIR"
 cd "$BASE_DIR"
 
 if [ -e root_package ];then
-    echo "root_package already exists, remove it to reconfigure or run ./make_package.sh"
-    exit 1
+    echo "Removing already existing root_package, will create new one"
+    rm -rf root_package
 fi
 
 cd webapp
