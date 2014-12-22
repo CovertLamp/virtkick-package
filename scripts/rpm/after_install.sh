@@ -9,6 +9,14 @@ echo "Setting up VirtKick"
 # http://unix.stackexchange.com/a/65789/23420
 # basically this gives no security whatsoever
 sed -i -r 's/\s*Defaults\s+requiretty\s*//' /etc/sudoers
+
+if which udevadm > /dev/null; then
+  # qemu-kvm adds new udev rules for /dev/kvm but it doesn't reload
+  # them, let's do it ourselves
+  udevadm control --reload-rules
+  udevadm trigger
+fi
+
 cd /opt/virtkick
 if ! getent passwd virtkick-run > /dev/null; then
   useradd virtkick-run -c "VirtKick running account" -s /bin/bash -m $ADD_LIBVIRT -d /var/lib/virtkick-run
