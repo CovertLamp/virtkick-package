@@ -1,0 +1,11 @@
+[Unit]
+Description=Entry point, listens on port 3000
+After=network.target
+
+[Service]
+User=virtkick-run
+ExecStart=/opt/virtkick/bin/virtkick-proxy
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

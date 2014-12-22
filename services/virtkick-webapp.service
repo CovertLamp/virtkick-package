@@ -1,0 +1,11 @@
+[Unit]
+Description=Web application
+After=network.target
+
+[Service]
+User=virtkick-run
+ExecStart=/opt/virtkick/bin/virtkick-webapp -p 3001
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

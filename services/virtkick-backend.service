@@ -1,0 +1,11 @@
+[Unit]
+Description=JSON API for libvirt
+After=network.target
+
+[Service]
+User=virtkick-run
+ExecStart=/opt/virtkick/bin/virtkick-backend
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
