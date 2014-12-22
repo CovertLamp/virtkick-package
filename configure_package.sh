@@ -49,5 +49,5 @@ if ! [ -e aria2c ];then
 fi
 cd "$BASE_DIR"
 mkdir -p root_package/opt root_package/usr/lib/systemd/system
-mv output /root_package/opt/virtkick
-mv services/* root_package/usr/lib/systemd/system
+mv output root_package/opt/virtkick
+cp services/* root_package/usr/lib/systemd/system
