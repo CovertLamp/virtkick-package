@@ -1,6 +1,14 @@
 #!/bin/bash
 set -e
 echo "Setting up VirtKick"
+
+# This option set is consider a bug and is gonna be removed from
+# major distros anyway, we need sudo to configure virtkick
+# so we're doing you a favor
+#
+# http://unix.stackexchange.com/a/65789/23420
+# basically this gives no security whatsoever
+sed -i -r 's/\s*Defaults\s+requiretty\s*//' /etc/sudoers
 cd /opt/virtkick
 if ! getent passwd virtkick-run > /dev/null; then
   useradd virtkick-run -c "VirtKick running account" -s /bin/bash -m $ADD_LIBVIRT -d /var/lib/virtkick-run
