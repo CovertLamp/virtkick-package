@@ -58,7 +58,7 @@ generate_rpm '' \
 generate_deb ''  \
     -d 'bash' \
     -d 'openssh-server' \
-    -d 'qemu-kvm > 1.2'
+    -d 'qemu-kvm > 1.2' \
     -d 'libvirt-bin > 1.1' \
     -d 'libvirt-python > 1.1' \
     -d 'python > 2.7' \
